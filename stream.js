@@ -1,6 +1,8 @@
 const readlineSync = require("readline-sync");
-let AT_MENU = true;
-let AT_PLAYER = false;
+
+const Queue = require("./Queue");
+const Player = require("./player");
+const playerQueue = new Queue();
 
 let playerNames = [
   "Nikhil",
@@ -12,14 +14,11 @@ let playerNames = [
   "Wen Chen",
   "Aaro",
 ];
-let playerActions = [];
-let playerStacks = [];
+
+let players = Array.from({ length: 8 }, () => new Player());
+
 let board = [];
 let button = 2;
-
-const Queue = require("./Queue");
-const Player = require("./player");
-const playerQueue = new Queue();
 
 const Menu = Object.freeze({
   HOME_PAGE: 0,
@@ -49,13 +48,14 @@ while (1) {
     selector = Menu.HOME_PAGE;
   } else if (selector == Menu.START_HANDS) {
     initializePlayerQueue(8);
+    console.log(playerQueue.items);
 
-    let lastToBet = null;
-    for (let i = 0; i < 3; i++) {
-      //action ends if reach lastToBet
-      // if queue size is > 1 then go to next street
-      // else everyone folds through start new hand
-    }
+    // let lastToBet = null;
+    // for (let i = 0; i < 3; i++) {
+    //   //action ends if reach lastToBet
+    //   // if queue size is > 1 then go to next street
+    //   // else everyone folds through start new hand
+    // }
     selector = Menu.HOME_PAGE;
     //read player hands
     // while action isnt over
@@ -75,7 +75,7 @@ function initializePlayerQueue(buttonSeat) {
     if (start >= 8) {
       start -= 8;
     }
-    playerQueue.enqueue(playerNames[start]);
+    playerQueue.enqueue(players[start]);
     start++;
   }
 }
@@ -90,10 +90,10 @@ function editPlayer() {
 
     console.log();
     const confirm = readlineSync
-      .question(`Change ${playerNames[seatNumber - 1]}? \n Y || N? \n`)
+      .question(`Change ${players[seatNumber - 1].name}? \n Y || N? \n`)
       .toLowerCase();
     if (confirm == "y") {
-      playerNames[seatNumber - 1] = readlineSync.question("Enter New Name: ");
+      players[seatNumber - 1].name = readlineSync.question("Enter New Name: ");
       console.log("Name Changed!");
       printPlayers();
     }
@@ -102,7 +102,6 @@ function editPlayer() {
 }
 
 function populatePlayerStacks() {
-  playerStacks = [];
   for (let i = 0; i < 8; i++) {
     let stackSize = parseInt(readlineSync.question(`Seat ${i + 1} Stack: `));
     while (parseInt(stackSize) == "NaN") {
@@ -110,14 +109,13 @@ function populatePlayerStacks() {
         `Invalid input, please enter number:  `
       );
     }
-    playerStacks[i] = stackSize;
+    players[i].stackSize = stackSize;
   }
 }
 
 function populatePlayerNames() {
-  playerNames = [];
   for (let i = 0; i < 8; i++) {
-    playerNames[i] = readlineSync.question(`Seat ${i + 1} Name: `);
+    players[i].name = readlineSync.question(`Seat ${i + 1} Name: `);
   }
 
   printPlayers();
@@ -145,8 +143,8 @@ function welcome() {
 function printPlayers() {
   console.log(`\n\n\n\nPlayer names \n`);
 
-  for (let i = 0; i < playerNames.length; i++) {
-    console.log(`${i + 1}. ${playerNames[i]}`);
+  for (let i = 0; i < players.length; i++) {
+    console.log(`${i + 1}. ${players[i].name}`);
   }
 
   console.log(`\n\n`);
@@ -156,7 +154,7 @@ function printPlayersAndStacks() {
   console.log(`\n\n\n\nPlayer names \n`);
 
   for (let i = 0; i < playerNames.length; i++) {
-    console.log(`${i + 1}. ${playerNames[i]} ${playerStacks[i]}`);
+    console.log(`${i + 1}. ${players[i].name} ${players[i].stackSize}`);
   }
 
   console.log(`\n\n`);

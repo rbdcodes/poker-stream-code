@@ -1,8 +1,10 @@
 class Player {
-  constructor(name, seatNumber) {
-    this.name = name;
+  constructor() {
+    this.name = "";
     this.stackSize = 0;
-    this.seatNumber = seatNumber;
+    this.seatNumber = "";
+    this.currentBet = 0;
+    this.positionName = "";
   }
 }
 
