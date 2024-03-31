@@ -1,0 +1,859 @@
+{
+    "apiUrl": null,
+    "externalId": "",
+    "chipType": null,
+    "createdAt": "2024-03-31T12:13:07.24-05:00",
+    "extra": null,
+    "id": "xEDyvwJevR",
+    "name": "Hands",
+    "notes": null,
+    "operationType": "ENCODE_UHF_TAGS",
+    "tags": [
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "1xU9phkWRn",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "7076EC0327A17B8B61E8E2E9741EC00541E1212FB0F8EC53672D722AEB96BEF4",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "0490BE9AF51590",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 1,
+            "readAt": "2024-03-31T15:02:12.9-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 1,
+            "status": "READ",
+            "timeSinceLastTag": null
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "QlKERMcBY2",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "BBBAD66765620B0D845267AA50D76F0C27D9A16E98FC269DDD92D9DD7A75E472",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "04C8253A2D6084",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 2,
+            "readAt": "2024-03-31T15:02:14.64-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 2,
+            "status": "READ",
+            "timeSinceLastTag": "PT1.740S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "FqePKNda3q",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "F62A4156C2FC4A203C583101EBF66E5439C5E07A65ABE1EBB822D8AB759B0C9E",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "043AF892F51590",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 3,
+            "readAt": "2024-03-31T15:02:15.67-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 3,
+            "status": "READ",
+            "timeSinceLastTag": "PT1.030S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "vhvCLZ37Hp",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "92E8C124C640487E062C492559C30BE2EB36F0D97505C9049D1528BC8D805BBA",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "04951792F51594",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 4,
+            "readAt": "2024-03-31T15:02:22.8-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 4,
+            "status": "READ",
+            "timeSinceLastTag": "PT7.130S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "GLYCKxhfWC",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "4DC97F4A1C8953DF0C02A4240E31AB0AE29C8CCE550F59720C2A732BED07EA53",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "04470B92F51594",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 5,
+            "readAt": "2024-03-31T15:02:24-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 5,
+            "status": "READ",
+            "timeSinceLastTag": "PT1.200S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "vXZN2A992x",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "A240B5650DC50A39C74F6F94753EFBB62C465403B87852DEE60E1C4DF107059E",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "04430B92F51594",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 6,
+            "readAt": "2024-03-31T15:02:25.49-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 6,
+            "status": "READ",
+            "timeSinceLastTag": "PT1.490S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "9u1fnZefpM",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "830010F79EAD475B0829D0C993A258B2C789598AE634FA2DEDDCE7B95EFF5026",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "0488BC9AF51590",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 7,
+            "readAt": "2024-03-31T15:02:27.88-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 7,
+            "status": "READ",
+            "timeSinceLastTag": "PT2.390S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "gVEmCpzt1K",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "72B68A6162102CC14136E4A8AB0A6B61CF31A7E739A2015D10A09AF4DC7B1001",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "047EB69AF51590",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 8,
+            "readAt": "2024-03-31T15:02:31.01-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 8,
+            "status": "READ",
+            "timeSinceLastTag": "PT3.130S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "ptEHe9VURG",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "65BC5C824D33909960FB488C5B90054E53B93806DAC7A7FDC161C4CF031AD430",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "04881992F51594",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 9,
+            "readAt": "2024-03-31T15:02:32.93-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 9,
+            "status": "READ",
+            "timeSinceLastTag": "PT1.920S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "V9MzkCWMxm",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "690526F66A2A76E1BD311CC642E3655404ABA3E882815D1141B166D817F3F210",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "0489B99AF51590",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 10,
+            "readAt": "2024-03-31T15:02:39.63-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 10,
+            "status": "READ",
+            "timeSinceLastTag": "PT6.700S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "pzPXX3hXrz",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "11DB05A203B537BC64C3D5FF0972EF05F740EA291859063AC15C85C0F4A13C73",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "0431B99AF51590",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 11,
+            "readAt": "2024-03-31T15:02:41.65-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 11,
+            "status": "READ",
+            "timeSinceLastTag": "PT2.020S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "lMP41bueAr",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "0D88182E4428F03539EFF405E7A38E160DAF157BEFE3C1BAD1F98E7D86E67CF4",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "0487B99AF51590",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 12,
+            "readAt": "2024-03-31T15:02:43.42-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 12,
+            "status": "READ",
+            "timeSinceLastTag": "PT1.770S"
+        },
+        {
+            "account": {
+                "company": "RBD RFIDs",
+                "id": "8eMhYCjCTk",
+                "name": "rbd desktop"
+            },
+            "client": {
+                "appVersion": "v4.15.0.24",
+                "hardwareUid": "4C4C4544-004D-5110-804A-B9C04F4D3533",
+                "ip": "209.166.123.105",
+                "name": "DESKTOP-U1IFVBO",
+                "os": "WINDOWS",
+                "osVersion": "10",
+                "uid": "TaR9wlxBa3pvXnmkJBUm"
+            },
+            "incident": null,
+            "message": null,
+            "nfcTag": {
+                "type": "gototags.desktop.nfc.tags.tech.type2.nxp.ulev1.UlEv1TagDataObj",
+                "cc": null,
+                "chipType": "ULTRALIGHT_EV1_48",
+                "format": "UNFORMATTED",
+                "instanceId": "QWYJtdRGUq",
+                "locked": false,
+                "lockedDynamic": false,
+                "lockedStatic": false,
+                "manufacturer": "NXP",
+                "userMemory": "",
+                "ndef": null,
+                "password": {
+                    "auth0": "FF",
+                    "authlim": "00",
+                    "counterProtected": false,
+                    "prot": "WRITE"
+                },
+                "signature": "14FEB759D88FD5E29C3011D25630A77C64BAD1CD495690AE05DFBE8A4536553D",
+                "tech": "EV1",
+                "technology": "NFC",
+                "tagType": "TYPE_2",
+                "uid": "04EFB89AF51590",
+                "version": {
+                    "chipType": "ULTRALIGHT_EV1_48",
+                    "data": "0004030101000B03",
+                    "majorProductVersion": "01",
+                    "manufacturer": "NXP",
+                    "minorProductVersion": "00",
+                    "productSubtype": "01",
+                    "protocolType": "03",
+                    "storageSize": "0B"
+                }
+            },
+            "notes": null,
+            "order": 13,
+            "readAt": "2024-03-31T15:02:45.01-05:00",
+            "reader": {
+                "hardware": "ACR122U",
+                "id": "ACS_ACR122U_0",
+                "instanceId": "MRN2kNCcrV",
+                "name": "ACS ACR122U #0 (PCSC_DIRECT)",
+                "uid": null
+            },
+            "readerOrder": 13,
+            "status": "READ",
+            "timeSinceLastTag": "PT1.590S"
+        }
+    ],
+    "updatedAt": "2024-03-31T12:13:07.24-05:00"
+}

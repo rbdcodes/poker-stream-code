@@ -19,6 +19,7 @@ let players = [];
 
 let board = [];
 let button = 2;
+const cardMap = new Map();
 
 const Menu = Object.freeze({
   HOME_PAGE: 0,
@@ -31,6 +32,7 @@ const Menu = Object.freeze({
 
 let selector = Menu.HOME_PAGE;
 
+initializeMapForCards();
 welcome();
 
 while (1) {
