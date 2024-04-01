@@ -2,24 +2,19 @@ const readlineSync = require("readline-sync");
 
 const Queue = require("./Queue");
 const Player = require("./player");
+const assignCardsToMap = require('./assignCards.js');
 const playerQueue = new Queue();
 
-let playerNames = [
-  "Nikhil",
-  "Clayton",
-  "Colton",
-  "Andres",
-  "Rahman",
-  "Jacob",
-  "Wen Chen",
-  "Aaro",
-];
+const SMALL_BLIND = 0.50
+const BIG_BLIND = 1.0
 
-let players = [];
-
-let board = [];
-let button = 2;
-const cardMap = new Map();
+const POSITIONS = { //in order of who acts first preflop
+  FOUR_HANDED: ["UTG", "D", "SB", "BB"],
+  FIVE_HANDED: ["UTG", "CO", "D", "SB", "BB"],
+  SIX_HANDED: ["UTG", "HJ", "CO", "D", "SB", "BB"],
+  SEVEN_HANDED: ["UTG", "UTG1", "HJ", "CO", "D", "SB,", "BB"],
+  EIGHT_HANDED: ["UTG", "UTG1", "UTG2", "HJ", "CO", "D", "SB,", "BB"]
+}
 
 const Menu = Object.freeze({
   HOME_PAGE: 0,
@@ -30,46 +25,63 @@ const Menu = Object.freeze({
   START_HANDS: 5,
 });
 
+let players = [];
+
+let board = [];
+let button = 2;
+const cardMap = new Map();
 let selector = Menu.HOME_PAGE;
 
-initializeMapForCards();
-welcome();
+let LAST_TO_BET = {
+  NAME: "",
+  AMOUNT: 0
+}
 
-while (1) {
-  if (selector == Menu.HOME_PAGE) {
-    promptUserForOptions();
-  } else if (selector == Menu.ADD_PLAYERS) {
-    populatePlayerNames();
-    selector = Menu.HOME_PAGE;
-  } else if (
-    players.length == 0 &&
-    (selector != Menu.HOME_PAGE || selector != Menu.ADD_PLAYERS)
-  ) {
-    selector = Menu.HOME_PAGE;
-    console.log();
-    console.log(`No players have been added. Please add players first`);
-    readlineSync.question(`Enter any character to continue: `);
-    console.log();
-  } else if (selector == Menu.EDIT_PLAYERS) {
-    selector = Menu.HOME_PAGE;
-    printPlayers();
-    editPlayer();
-  } else if (selector == Menu.EDIT_STACKS) {
-    selector = Menu.HOME_PAGE;
-    populatePlayerStacks();
-    printPlayersAndStacks();
-  } else if (selector == Menu.VIEW_PLAYERS) {
-    selector = Menu.HOME_PAGE;
+main()
 
-    console.log(players);
-    console.log();
-  } else if (selector == Menu.START_HANDS) {
-    selector = Menu.HOME_PAGE;
-    const buttonStartingPosition = getButton();
-    initializePlayerQueue(buttonStartingPosition);
-    //readHands()
-    // setBlinds();
+async function main() {
+  await assignCardsToMap(cardMap);
+  welcome();
+
+  while (1) {
+    if (selector == Menu.HOME_PAGE) {
+      promptUserForOptions();
+    } else if (selector == Menu.ADD_PLAYERS) {
+      populatePlayerNames();
+      selector = Menu.HOME_PAGE;
+    } else if (
+      players.length == 0 &&
+      (selector != Menu.HOME_PAGE || selector != Menu.ADD_PLAYERS)
+    ) {
+      selector = Menu.HOME_PAGE;
+      console.log();
+      console.log(`No players have been added. Please add players first`);
+      readlineSync.question(`Enter any character to continue: `);
+      console.log();
+    } else if (selector == Menu.EDIT_PLAYERS) {
+      selector = Menu.HOME_PAGE;
+      printPlayers();
+      editPlayer();
+    } else if (selector == Menu.EDIT_STACKS) {
+      selector = Menu.HOME_PAGE;
+      populatePlayerStacks();
+      printPlayersAndStacks();
+    } else if (selector == Menu.VIEW_PLAYERS) {
+      selector = Menu.HOME_PAGE;
+  
+      console.log(players);
+      console.log();
+    } else if (selector == Menu.START_HANDS) {
+      selector = Menu.HOME_PAGE;
+      const buttonStartingPosition = getButton();
+      initializePlayerQueue(buttonStartingPosition);
+      //assignCardsToPlayers()      
+    }
   }
+}
+
+function assignCardsToPlayers() {
+  
 }
 
 function getButton() {
@@ -97,12 +109,37 @@ function initializePlayerQueue(buttonSeat) {
     UTG -= numberOfPlayers;
   }
   let start = UTG;
+  const positionArray = getPlayerPositions(numberOfPlayers)
   for (let i = 0; i < numberOfPlayers; i++) {
     if (start >= numberOfPlayers) {
       start -= numberOfPlayers;
     }
-    playerQueue.enqueue(players[start]);
+
+    let currentPlayer = players[start];
+    currentPlayer.position = positionArray[i];
+    if (currentPlayer.position == "SB") {
+      currentPlayer.currentBet = SMALL_BLIND
+    } else if (currentPlayer.position == "BB") {
+      currentPlayer.currentBet = BIG_BLIND
+      LAST_TO_BET.NAME = currentPlayer.name
+      LAST_TO_BET.AMOUNT = currentPlayer.currentBet
+    }
+    playerQueue.enqueue(currentPlayer);
     start++;
+  }
+}
+
+function getPlayerPositions(numberOfPlayers) {
+  if (numberOfPlayers == 4) {
+    return POSITIONS.FOUR_HANDED;
+  } else if (numberOfPlayers == 5) {
+    return POSITIONS.FIVE_HANDED;
+  } else if (numberOfPlayers == 6) { 
+    return POSITIONS.SIX_HANDED;
+  } else if (numberOfPlayers == 7) {
+    return POSITIONS.SEVEN_HANDED;
+  } else if (numberOfPlayers == 8) {
+    return POSITIONS.EIGHT_HANDED;
   }
 }
 
