@@ -67,20 +67,8 @@ while (1) {
     selector = Menu.HOME_PAGE;
     const buttonStartingPosition = getButton();
     initializePlayerQueue(buttonStartingPosition);
+    //readHands()
     // setBlinds();
-    console.log(playerQueue.items);
-
-    // let lastToBet = null;
-    // for (let i = 0; i < 3; i++) {
-    //   //action ends if reach lastToBet
-    //   // if queue size is > 1 then go to next street
-    //   // else everyone folds through start new hand
-    // }
-    //read player hands
-    // while action isnt over
-    // track player actions
-    // update pot
-    // deal community cards
   }
 }
 
