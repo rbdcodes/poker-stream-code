@@ -1,8 +1,26 @@
-// const assignCards = require('./assignCards.js');
-// const cardMap = new Map();
+function getScannedCards(array) {
+    return new Promise((resolve, reject) => {
+      try {
+        const scannedCards = require("./TEST/hands.json");
+        for (card of scannedCards.tags) {
+          array.push(card.nfcTag.uid)
+        }
+        resolve();
+      } catch (error) {
+        reject(error);
+      }
+    });
+  }
 
-// assignCards(cardMap)
-//   .then(() => {
-//     console.log(cardMap);
-//   })
-//   .catch(err => console.error(err));
+  async function example() {
+    let test = [];
+    try {
+      await getScannedCards(test);
+      console.log(test); // Print the array after it has been filled with scanned card UIDs
+    } catch (error) {
+      console.error(error);
+    }
+  }
+  
+  example();
+  

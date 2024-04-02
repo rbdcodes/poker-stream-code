@@ -75,14 +75,76 @@ async function main() {
       selector = Menu.HOME_PAGE;
       const buttonStartingPosition = getButton();
       initializePlayerQueue(buttonStartingPosition);
-      //assignCardsToPlayers()      
+      await assignCardsToPlayers(buttonStartingPosition)
+      // assignCardsToPlayers()
     }
   }
 }
+ 
+async function assignCardsToPlayers(buttonSeat) {
+  console.log("\nScanning for cards...")
+  readlineSync.question(`Press any letter when ready: `)
+  console.log(`Scanned cards are: `)
+  let cardArray = []
+  try {
+    await getScannedCards(cardArray);
+  } catch (error) {
+    console.error(error);
+  }
 
-function assignCardsToPlayers() {
-  
+  let playerIndex = buttonSeat //this is really the SB but players Array is 0 indexed
+
+
+  let cardIndex = 0;
+  for (let i = 0; i < cardArray.length; i++) {
+    if (playerIndex >= players.length) {
+      playerIndex -= players.length;
+    }
+    if (i == (cardArray.length / 2)) { cardIndex = 1;}
+    const currentPlayer = players[playerIndex++]
+    currentPlayer.hand[cardIndex] = cardArray[i];
+  }
+
+  console.log(playerQueue.items)
+
+  // console.log(playerQueue.items)
+  // read from json
+  // get all UID's
+  // iterate through all stored UID's
+  // when reach halfway point reset player index
+
+  // iterate through all players and sort cards from highest to lowest
 }
+
+function getScannedCards(array) {
+  return new Promise((resolve, reject) => {
+    try {
+      const scannedCards = require("./TEST/hands.json");
+      for (card of scannedCards.tags) {
+        array.push(cardMap.get(card.nfcTag.uid))
+      }
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+
+function printScannedCards() {
+  return new Promise((resolve, reject) => {
+    try {
+      const scannedCards = require("./TEST/hands.json");
+      for (card of scannedCards.tags) {
+        console.log(cardMap.get(card.nfcTag.uid))
+      }
+      resolve();
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
 
 function getButton() {
   let buttonSeat = parseInt(

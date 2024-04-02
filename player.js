@@ -5,7 +5,7 @@ class Player {
     this.seatNumber = "";
     this.currentBet = 0.0;
     this.position = "";
-    this.hand = "";
+    this.hand = ["", ""]
   }
 }
 
