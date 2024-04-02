@@ -8,20 +8,21 @@ const playerQueue = new Queue();
 const SMALL_BLIND = 0.50
 const BIG_BLIND = 1.0
 
-const POSITIONS = { //in order of who acts first preflop
+const POSITIONS = Object.freeze({ //in order of who acts first preflop
   FOUR_HANDED: ["UTG", "D", "SB", "BB"],
   FIVE_HANDED: ["UTG", "CO", "D", "SB", "BB"],
   SIX_HANDED: ["UTG", "HJ", "CO", "D", "SB", "BB"],
-  SEVEN_HANDED: ["UTG", "UTG1", "HJ", "CO", "D", "SB,", "BB"],
-  EIGHT_HANDED: ["UTG", "UTG1", "UTG2", "HJ", "CO", "D", "SB,", "BB"]
-}
+  SEVEN_HANDED: ["UTG", "UTG1", "HJ", "CO", "D", "SB", "BB"],
+  EIGHT_HANDED: ["UTG", "UTG1", "UTG2", "HJ", "CO", "D", "SB", "BB"]
+})
 
-const CARD_VALUES = {
-  J: 11,
-  Q: 12,
-  K: 13,
-  A: 14
-}
+const ACTIONS = Object.freeze({
+  BET: 'b',
+  FOLD: 'f',
+  CALL: 'c',
+  RAISE: 'r',
+  CHECK: 'x'
+})
 
 const Menu = Object.freeze({
   HOME_PAGE: 0,
@@ -83,11 +84,99 @@ async function main() {
       const buttonStartingPosition = getButton();
       initializePlayerQueue(buttonStartingPosition);
       await assignCardsToPlayers(buttonStartingPosition)
-      // assignCardsToPlayers()
+      readPlayerActions()
+      // read player Actions
     }
   }
 }
- 
+
+async function readPlayerActions() {
+  // for loop 4 long for each street
+  // while loop inside while u arent at player who bet last
+  let handIsOver = false;
+    // console.log(`pQ l: ${playerQueue.size()}, lastbet: ${LAST_TO_BET.NAME}, playerAct = ${playerToAct.name}`)
+    let actionIsClosed = false;
+    NEXT_LAST_TO_BET = {
+      NAME: LAST_TO_BET.NAME,
+      AMOUNT: LAST_TO_BET.AMOUNT
+    }
+    let playerToAct = {}
+    while (playerQueue.size() > 1 && LAST_TO_BET.NAME != playerToAct.name) {
+        playerToAct = playerQueue.dequeue()
+
+        const input = readlineSync.question(`\n${playerToAct.position}|Seat ${playerToAct.seatNumber}: 'f', 'x', 'b', 'c', 'r':  `);
+        const action = input.charAt(0);
+        if (action == ACTIONS.BET) {
+          console.log("bet")
+          const betAmount = getBetAmount(playerToAct);
+          playerToAct.stackSize -= betAmount;
+          playerToAct.action = ACTIONS.BET
+          playerToAct.currentBet = betAmount
+
+          LAST_TO_BET.NAME = playerToAct.name;
+          LAST_TO_BET.AMOUNT = betAmount;
+          playerQueue.enqueue(playerToAct);
+        } else if (action == ACTIONS.RAISE) {
+          console.log("raise")
+
+          const betAmount = getBetAmount(playerToAct);
+          playerToAct.stackSize = playerToAct.stackSize -  (betAmount - playerToAct.currentBet);
+          playerToAct.action = ACTIONS.RAISE
+          playerToAct.currentBet = betAmount
+
+          LAST_TO_BET.NAME = playerToAct.name;
+          LAST_TO_BET.AMOUNT = betAmount;
+          playerQueue.enqueue(playerToAct);
+        } else if (action == ACTIONS.CALL) {
+          console.log("call")
+
+          playerToAct.stackSize = playerToAct.stackSize - (LAST_TO_BET.AMOUNT - playerToAct.currentBet);
+          playerToAct.currentBet = LAST_TO_BET.AMOUNT
+          playerToAct.action = ACTIONS.CALL
+
+          playerQueue.enqueue(playerToAct)
+        } else if (action == ACTIONS.CHECK) {
+          console.log("test in check")
+          playerToAct.action = ACTIONS.CHECK
+          playerQueue.enqueue(playerToAct)
+
+          if (playerToAct.name == LAST_TO_BET.NAME) {
+            console.log("broke")
+            break;
+          }
+        } else if (action == ACTIONS.FOLD) {
+          console.log("fold")
+
+          playerToAct.action = ACTIONS.FOLD
+        } else {
+          console.log(`Incorrect input, please retry`)
+          continue;
+        }
+
+        playerToAct = playerQueue.peek()
+    }
+
+    console.log(players)
+
+  
+}
+
+function getBetAmount(playerToAct) {
+  let betAmount = readlineSync.question(`Bet amount: `)
+  while (parseInt(betAmount) == "NaN") {
+    betAmount = readlineSync.question(`Invalid input, try again: `)
+  }
+
+  while (betAmount > playerToAct.stackSize) {
+    betAmount = readlineSync.question(`Invalid input bet > stack size, try again: `)
+    while (parseInt(betAmount) == "NaN") {
+      betAmount = readlineSync.question(`Invalid input, try again: `)
+    }
+  }
+
+  return betAmount;
+}
+
 async function assignCardsToPlayers(buttonSeat) {
   console.log("\nScanning for cards...")
   readlineSync.question(`Press any letter when ready: `)
@@ -100,7 +189,6 @@ async function assignCardsToPlayers(buttonSeat) {
 
   let playerIndex = buttonSeat //this is really the SB but players Array is 0 indexed
 
-
   let cardIndex = 0;
   for (let i = 0; i < cardArray.length; i++) {
     if (playerIndex >= players.length) {
@@ -110,17 +198,8 @@ async function assignCardsToPlayers(buttonSeat) {
     const currentPlayer = players[playerIndex++]
     currentPlayer.hand[cardIndex] = cardArray[i];
   }
-  console.log(playerQueue.items)
+
   sortPlayerHoleCards();
-  console.log(playerQueue.items)
-
-  // console.log(playerQueue.items)
-  // read from json
-  // get all UID's
-  // iterate through all stored UID's
-  // when reach halfway point reset player index
-
-  // iterate through all players and sort cards from highest to lowest
 }
 
 function sortPlayerHoleCards() {
@@ -227,8 +306,10 @@ function initializePlayerQueue(buttonSeat) {
     currentPlayer.position = positionArray[i];
     if (currentPlayer.position == "SB") {
       currentPlayer.currentBet = SMALL_BLIND
+      currentPlayer.stackSize -= SMALL_BLIND
     } else if (currentPlayer.position == "BB") {
       currentPlayer.currentBet = BIG_BLIND
+      currentPlayer.stackSize -= BIG_BLIND
       LAST_TO_BET.NAME = currentPlayer.name
       LAST_TO_BET.AMOUNT = currentPlayer.currentBet
     }
@@ -299,8 +380,15 @@ function populatePlayerNames() {
   }
 
   players = Array.from({ length: numberOfPlayers }, () => new Player());
+  // for (let i = 0; i < numberOfPlayers; i++) {
+  //   players[i].name = readlineSync.question(`Seat ${i + 1} Name: `);
+  //   players[i].seatNumber = i+1;
+  // }
+
   for (let i = 0; i < numberOfPlayers; i++) {
-    players[i].name = readlineSync.question(`Seat ${i + 1} Name: `);
+    players[i].name = `Player ${i+1}`
+    players[i].seatNumber = i+1
+    players[i].stackSize = 100
   }
 
   printPlayers();

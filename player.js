@@ -6,6 +6,7 @@ class Player {
     this.currentBet = 0.0;
     this.position = "";
     this.hand = ["", ""]
+    this.action = ""
   }
 }
 

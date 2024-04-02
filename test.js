@@ -22,5 +22,6 @@ function getScannedCards(array) {
     }
   }
   
-  example();
+  // example();
   
+  console.log(parseInt(""))
