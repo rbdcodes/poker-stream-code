@@ -16,6 +16,13 @@ const POSITIONS = { //in order of who acts first preflop
   EIGHT_HANDED: ["UTG", "UTG1", "UTG2", "HJ", "CO", "D", "SB,", "BB"]
 }
 
+const CARD_VALUES = {
+  J: 11,
+  Q: 12,
+  K: 13,
+  A: 14
+}
+
 const Menu = Object.freeze({
   HOME_PAGE: 0,
   ADD_PLAYERS: 1,
@@ -84,7 +91,6 @@ async function main() {
 async function assignCardsToPlayers(buttonSeat) {
   console.log("\nScanning for cards...")
   readlineSync.question(`Press any letter when ready: `)
-  console.log(`Scanned cards are: `)
   let cardArray = []
   try {
     await getScannedCards(cardArray);
@@ -104,7 +110,8 @@ async function assignCardsToPlayers(buttonSeat) {
     const currentPlayer = players[playerIndex++]
     currentPlayer.hand[cardIndex] = cardArray[i];
   }
-
+  console.log(playerQueue.items)
+  sortPlayerHoleCards();
   console.log(playerQueue.items)
 
   // console.log(playerQueue.items)
@@ -114,6 +121,45 @@ async function assignCardsToPlayers(buttonSeat) {
   // when reach halfway point reset player index
 
   // iterate through all players and sort cards from highest to lowest
+}
+
+function sortPlayerHoleCards() {
+  for (player of players) {
+    let hand1 = player.hand[0].charAt(0);
+    let hand2 = player.hand[1].charAt(0);
+    let hand1Value = 0;
+    let hand2Value = 0;
+
+    if (hand1 == 'A') {
+      hand1Value = 14;
+    } else if (hand1 == 'K') {
+      hand1Value = 13;
+    } else if (hand1 == 'Q') {
+      hand1Value = 12;
+    } else if (hand1 == 'J') {
+      hand1Value = 11
+    } else {
+      hand1Value = parseInt(hand1);
+    }
+
+    if (hand2 == 'A') {
+      hand2Value = 14;
+    } else if (hand2 == 'K') {
+      hand2Value = 13;
+    } else if (hand2 == 'Q') {
+      hand2Value = 12;
+    } else if (hand2 == 'J') {
+      hand2Value = 11
+    } else {
+      hand2Value = parseInt(hand2);
+    }
+
+    if (hand2Value > hand1Value) {
+      const tmp = player.hand[0];
+      player.hand[0] = player.hand[1];
+      player.hand[1] = tmp;
+    }
+  }
 }
 
 function getScannedCards(array) {
