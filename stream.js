@@ -238,13 +238,13 @@ function adjustPlayerQueueOrder() {
 
 function getBetAmount(playerToAct) {
   let betAmount = readlineSync.question(`Bet amount: `)
-  while (parseInt(betAmount) == "NaN") {
+  while (isNaN(parseInt(betAmount))) {
     betAmount = readlineSync.question(`Invalid input, try again: `)
   }
 
   while (betAmount > playerToAct.stackSize) {
     betAmount = readlineSync.question(`Invalid input bet > stack size, try again: `)
-    while (parseInt(betAmount) == "NaN") {
+    while (isNaN(parseInt(betAmount))) {
       betAmount = readlineSync.question(`Invalid input, try again: `)
     }
   }
@@ -353,7 +353,7 @@ function getButton() {
     )
   );
 
-  while (buttonSeat == "NaN" || buttonSeat < 1 || buttonSeat > players.length) {
+  while (isNaN(buttonSeat) || buttonSeat < 1 || buttonSeat > players.length) {
     buttonSeat = parseInt(
       readlineSync.question(
         `Invalid Input, please enter number from 1-${players.length}: `
@@ -431,7 +431,7 @@ function editPlayer() {
 function populatePlayerStacks() {
   for (let i = 0; i < players.length; i++) {
     let stackSize = parseInt(readlineSync.question(`Seat ${i + 1} Stack: `));
-    while (stackSize == "NaN") {
+    while (isNaN(stackSize)) {
       stackSize = readlineSync.question(
         `Invalid input, please enter number:  `
       );
@@ -445,7 +445,7 @@ function populatePlayerNames() {
     readlineSync.question(`Input number of players between 4-8: `)
   );
   while (
-    numberOfPlayers == "NaN" ||
+    isNaN(numberOfPlayers) ||
     numberOfPlayers > 8 ||
     numberOfPlayers < 4
   ) {
