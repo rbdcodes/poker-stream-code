@@ -96,12 +96,8 @@ async function readPlayerActions() {
   let handIsOver = false;
     // console.log(`pQ l: ${playerQueue.size()}, lastbet: ${LAST_TO_BET.NAME}, playerAct = ${playerToAct.name}`)
     let actionIsClosed = false;
-    NEXT_LAST_TO_BET = {
-      NAME: LAST_TO_BET.NAME,
-      AMOUNT: LAST_TO_BET.AMOUNT
-    }
     let playerToAct = {}
-    while (playerQueue.size() > 1 && LAST_TO_BET.NAME != playerToAct.name) {
+    while (playerQueue.size() > 1 && !actionIsClosed) {
         playerToAct = playerQueue.dequeue()
 
         const input = readlineSync.question(`\n${playerToAct.position}|Seat ${playerToAct.seatNumber}: 'f', 'x', 'b', 'c', 'r':  `);
@@ -117,7 +113,7 @@ async function readPlayerActions() {
           LAST_TO_BET.AMOUNT = betAmount;
           playerQueue.enqueue(playerToAct);
         } else if (action == ACTIONS.RAISE) {
-          console.log("raise")
+          console.log("Raise")
 
           const betAmount = getBetAmount(playerToAct);
           playerToAct.stackSize = playerToAct.stackSize -  (betAmount - playerToAct.currentBet);
@@ -128,7 +124,7 @@ async function readPlayerActions() {
           LAST_TO_BET.AMOUNT = betAmount;
           playerQueue.enqueue(playerToAct);
         } else if (action == ACTIONS.CALL) {
-          console.log("call")
+          console.log("Call")
 
           playerToAct.stackSize = playerToAct.stackSize - (LAST_TO_BET.AMOUNT - playerToAct.currentBet);
           playerToAct.currentBet = LAST_TO_BET.AMOUNT
@@ -136,16 +132,16 @@ async function readPlayerActions() {
 
           playerQueue.enqueue(playerToAct)
         } else if (action == ACTIONS.CHECK) {
-          console.log("test in check")
+          console.log("Check")
           playerToAct.action = ACTIONS.CHECK
           playerQueue.enqueue(playerToAct)
 
           if (playerToAct.name == LAST_TO_BET.NAME) {
-            console.log("broke")
-            break;
+            console.log("Check closes action")
+            actionIsClosed = true;
           }
         } else if (action == ACTIONS.FOLD) {
-          console.log("fold")
+          console.log("Fold")
 
           playerToAct.action = ACTIONS.FOLD
         } else {
@@ -154,9 +150,14 @@ async function readPlayerActions() {
         }
 
         playerToAct = playerQueue.peek()
+        if (playerToAct.name == LAST_TO_BET.NAME && playerToAct.position != "BB" && LAST_TO_BET.AMOUNT != BIG_BLIND) {
+          actionIsClosed = true;
+        }
+
+        //determine if actionIsClosed here
     }
 
-    console.log(players)
+    console.log(playerQueue.items)
 
   
 }
