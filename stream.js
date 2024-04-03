@@ -42,7 +42,7 @@ let selector = Menu.HOME_PAGE;
 
 let LAST_TO_BET = {
   NAME: "",
-  AMOUNT: 0
+  AMOUNT: 0.0
 }
 
 main()
@@ -91,15 +91,23 @@ async function main() {
 }
 
 async function readPlayerActions() {
-  // for loop 4 long for each street
-  // while loop inside while u arent at player who bet last
   let handIsOver = false;
-    // console.log(`pQ l: ${playerQueue.size()}, lastbet: ${LAST_TO_BET.NAME}, playerAct = ${playerToAct.name}`)
+  let pot = SMALL_BLIND + BIG_BLIND
+  for (let i = 0; i < 4 && playerQueue.size() > 1; i++) {
+    
+    if (i > 0) {
+      adjustPlayerQueueOrder()
+      setPlayerCurrentBetsToZero()
+      LAST_TO_BET.NAME = ""
+      LAST_TO_BET.AMOUNT = 0.0
+    }
+
+    console.log(playerQueue.items)
+
     let actionIsClosed = false;
     let playerToAct = {}
     while (playerQueue.size() > 1 && !actionIsClosed) {
         playerToAct = playerQueue.dequeue()
-
         const input = readlineSync.question(`\n${playerToAct.position}|Seat ${playerToAct.seatNumber}: 'f', 'x', 'b', 'c', 'r':  `);
         const action = input.charAt(0);
         if (action == ACTIONS.BET) {
@@ -109,6 +117,8 @@ async function readPlayerActions() {
           playerToAct.action = ACTIONS.BET
           playerToAct.currentBet = betAmount
 
+          pot += betAmount
+
           LAST_TO_BET.NAME = playerToAct.name;
           LAST_TO_BET.AMOUNT = betAmount;
           playerQueue.enqueue(playerToAct);
@@ -116,9 +126,11 @@ async function readPlayerActions() {
           console.log("Raise")
 
           const betAmount = getBetAmount(playerToAct);
+          pot += (betAmount - playerToAct.currentBet)
           playerToAct.stackSize = playerToAct.stackSize -  (betAmount - playerToAct.currentBet);
           playerToAct.action = ACTIONS.RAISE
           playerToAct.currentBet = betAmount
+
 
           LAST_TO_BET.NAME = playerToAct.name;
           LAST_TO_BET.AMOUNT = betAmount;
@@ -127,6 +139,7 @@ async function readPlayerActions() {
           console.log("Call")
 
           playerToAct.stackSize = playerToAct.stackSize - (LAST_TO_BET.AMOUNT - playerToAct.currentBet);
+          pot += (LAST_TO_BET.AMOUNT - playerToAct.currentBet)
           playerToAct.currentBet = LAST_TO_BET.AMOUNT
           playerToAct.action = ACTIONS.CALL
 
@@ -136,7 +149,7 @@ async function readPlayerActions() {
           playerToAct.action = ACTIONS.CHECK
           playerQueue.enqueue(playerToAct)
 
-          if (playerToAct.name == LAST_TO_BET.NAME) {
+          if (playerToAct.name == LAST_TO_BET.NAME || playerQueue.peek().action == ACTIONS.CHECK) {
             console.log("Check closes action")
             actionIsClosed = true;
           }
@@ -150,16 +163,48 @@ async function readPlayerActions() {
         }
 
         playerToAct = playerQueue.peek()
-        if (playerToAct.name == LAST_TO_BET.NAME && playerToAct.position != "BB" && LAST_TO_BET.AMOUNT != BIG_BLIND) {
+        if (playerToAct.name == LAST_TO_BET.NAME && LAST_TO_BET.AMOUNT != BIG_BLIND) {
           actionIsClosed = true;
         }
-
-        //determine if actionIsClosed here
     }
 
-    console.log(playerQueue.items)
+    console.log(`Pot is: ${pot}`)
 
-  
+  } 
+
+  // awrd pot to winner
+}
+
+function setPlayerCurrentBetsToZero() {
+  let player = {}
+  for (let i = 0; i < playerQueue.size(); i++) {
+    player = playerQueue.dequeue()
+    player.currentBet = 0.0
+    playerQueue.enqueue(player)
+  }
+}
+
+function adjustPlayerQueueOrder() {
+  playerQueue.clear();
+  let start = 0;
+  for (let i = 0; i < players.length; i++) {
+    if (players[i].position == "SB") {
+      start = i;
+      break;
+    }
+  }
+
+  for (let i = 0; i < players.length; i++) {
+    if (start == players.length) {
+      start -= players.length
+    }
+
+    if (players[start].action != ACTIONS.FOLD) {
+      playerQueue.enqueue(players[start])
+    }
+
+    start++
+  }
 }
 
 function getBetAmount(playerToAct) {
@@ -175,7 +220,7 @@ function getBetAmount(playerToAct) {
     }
   }
 
-  return betAmount;
+  return parseInt(betAmount);
 }
 
 async function assignCardsToPlayers(buttonSeat) {
