@@ -94,10 +94,10 @@ async function readPlayerActions() {
   let handIsOver = false;
   let pot = SMALL_BLIND + BIG_BLIND
   for (let i = 0; i < 4 && playerQueue.size() > 1; i++) {
-    
+
     if (i > 0) {
       adjustPlayerQueueOrder()
-      setPlayerCurrentBetsToZero()
+      resetPlayerCurrentBetAndAction()
       LAST_TO_BET.NAME = ""
       LAST_TO_BET.AMOUNT = 0.0
     }
@@ -173,13 +173,42 @@ async function readPlayerActions() {
   } 
 
   // awrd pot to winner
+  awardPotToWinner(pot)
+  console.log(players)
 }
 
-function setPlayerCurrentBetsToZero() {
+function awardPotToWinner(pot) {
+  if (playerQueue.size() == 1) {
+    playerQueue.peek().stackSize += pot
+    return;
+  } 
+
+  const remainingPlayers = []
+  const setOfRemainingSeats = new Set()
+  while (!playerQueue.isEmpty()) {
+    const player = playerQueue.dequeue()
+    remainingPlayers.push(player)
+    setOfRemainingSeats.add(player.seatNumber)
+  }
+
+
+  console.log(remainingPlayers)
+
+  let seatNumberThatWon = parseInt(readlineSync.question(`Which Seat won? `))
+  while (!setOfRemainingSeats.has(seatNumberThatWon)) {
+    console.log(remainingPlayers)
+    seatNumberThatWon = readlineSync.question(`Invalid Input, please choose seat from remaining players: `)
+  }
+
+  players[seatNumberThatWon-1].stackSize += pot;
+}
+
+function resetPlayerCurrentBetAndAction() {
   let player = {}
   for (let i = 0; i < playerQueue.size(); i++) {
     player = playerQueue.dequeue()
     player.currentBet = 0.0
+    player.action = ''
     playerQueue.enqueue(player)
   }
 }
