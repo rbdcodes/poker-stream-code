@@ -113,11 +113,12 @@ async function readPlayerActions() {
         if (action == ACTIONS.BET) {
           console.log("bet")
           const betAmount = getBetAmount(playerToAct);
-          playerToAct.stackSize -= betAmount;
+          playerToAct.stackSize = playerToAct.stackSize - (betAmount - playerToAct.currentBet);
           playerToAct.action = ACTIONS.BET
+          pot += (betAmount - playerToAct.currentBet)
+
           playerToAct.currentBet = betAmount
 
-          pot += betAmount
 
           LAST_TO_BET.NAME = playerToAct.name;
           LAST_TO_BET.AMOUNT = betAmount;
@@ -169,6 +170,7 @@ async function readPlayerActions() {
     }
 
     console.log(`Pot is: ${pot}`)
+    //update image here
 
   } 
 
