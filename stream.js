@@ -91,6 +91,7 @@ async function main() {
 }
 
 async function readPlayerActions() {
+  console.log(players)
   let handIsOver = false;
   let pot = SMALL_BLIND + BIG_BLIND
   for (let i = 0; i < 4 && playerQueue.size() > 1; i++) {
