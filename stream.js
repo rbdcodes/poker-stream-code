@@ -3,6 +3,7 @@ const readlineSync = require("readline-sync");
 const Queue = require("./Queue");
 const Player = require("./player");
 const assignCardsToMap = require('./assignCards.js');
+const generateMasterCanvas = require("./createOverlay");
 const playerQueue = new Queue();
 
 const SMALL_BLIND = 0.50
@@ -104,11 +105,16 @@ async function readPlayerActions() {
     }
 
     console.log(playerQueue.items)
+    //print remaining players
 
     let actionIsClosed = false;
     let playerToAct = {}
     while (playerQueue.size() > 1 && !actionIsClosed) {
         playerToAct = playerQueue.dequeue()
+        //set flag playerToAct.isTurn = true;
+        //generate players
+        await generateMasterCanvas(players)
+
         const input = readlineSync.question(`\n${playerToAct.position}|Seat ${playerToAct.seatNumber}: 'f', 'x', 'b', 'c', 'r':  `);
         const action = input.charAt(0);
         if (action == ACTIONS.BET) {
@@ -168,11 +174,11 @@ async function readPlayerActions() {
         if (playerToAct.name == LAST_TO_BET.NAME && LAST_TO_BET.AMOUNT != BIG_BLIND) {
           actionIsClosed = true;
         }
+
+        //set flag playerToact.isTurn = false
     }
 
     console.log(`Pot is: ${pot}`)
-    //update image here
-
   } 
 
   // awrd pot to winner

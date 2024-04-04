@@ -16,12 +16,11 @@ async function generateImage(player) {
   // Create a blank canvas
   const canvas = createCanvas(canvasWidth, canvasHeight);
   const context = canvas.getContext("2d");
-
   // Load images
   const images = await Promise.all([
-    loadImage("./overlay_imgs/background.png"),
-    loadImage("./stream_cards/7h.png"),
-    loadImage("./stream_cards/2c.png")
+    loadImage(__dirname + "/overlay_imgs/background.png"),
+    loadImage(__dirname + "/stream_cards/7h.png"),
+    loadImage(__dirname + "/stream_cards/2c.png")
   ]);
 
   images.forEach((image, index) => {
@@ -114,9 +113,11 @@ async function generateMasterCanvas(playerArray) { //input array of players & LA
   const masterCanvas = createCanvas(canvasWidth, canvasHeight);
   const masterContext = masterCanvas.getContext("2d")
 
+  console.log(`test 1`)
+
   // Create an array to store promises of generated images
   const imagePromises = playerArray.map(player => generateImage(player));
-
+  console.log(imagePromises)
   const canvases = await Promise.all(imagePromises)
 
   // Place each canvas on the master canvas
@@ -138,6 +139,7 @@ async function generateMasterCanvas(playerArray) { //input array of players & LA
   console.log("The master canvas PNG file was created.");
 }
 
-generateMasterCanvas(playerArray)
+// generateMasterCanvas(playerArray)
 
+// generateMasterCanvas(playerArray)
 module.exports = generateMasterCanvas;

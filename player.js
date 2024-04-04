@@ -7,6 +7,7 @@ class Player {
     this.position = "";
     this.hand = ["", ""]
     this.action = ""
+    this.isTurn = false
   }
 }
 
