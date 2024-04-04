@@ -1,9 +1,10 @@
+const fs = require("fs");
 const { createCanvas, loadImage } = require("canvas");
 const Player = require("./player");
 
 
 // Function to generate canvas with images and text
-function generateImage(player) {
+async function generateImage(player) {
   // Define canvas dimensions
   const canvasWidth = 406;
   const canvasHeight = 119;
@@ -17,39 +18,40 @@ function generateImage(player) {
   const context = canvas.getContext("2d");
 
   // Load images
-  return Promise.all([
+  const images = await Promise.all([
     loadImage("./overlay_imgs/background.png"),
     loadImage("./stream_cards/7h.png"),
     loadImage("./stream_cards/2c.png")
-  ]).then(images => {
-    images.forEach((image, index) => {
-      // Calculate scaling factor to fit image within canvas
-      let scale = Math.min(cardWidth / image.width, cardHeight / image.height);
-      let x, y;
-      if (index === 0) {
-        scale = 1;
-        x = 0;
-        y = 0;
-      }
+  ]);
+
+  images.forEach((image, index) => {
+    // Calculate scaling factor to fit image within canvas
+    let scale = Math.min(cardWidth / image.width, cardHeight / image.height);
+    let x, y;
+    if (index === 0) {
+      scale = 1;
+      x = 0;
+      y = 0;
+    }
 
       // Calculate resized dimensions
-      const width = image.width * scale;
-      const height = image.height * scale;
+    const width = image.width * scale;
+    const height = image.height * scale;
 
       // Calculate position to place the first image at the left edge (0, 0)
 
-      if (index === 1) {
-        x = 248;
-        y = -3; // Center vertically
-      } else if (index === 2) {
+    if (index === 1) {
+      x = 248;
+      y = -3; // Center vertically
+    } else if (index === 2) {
         // For the second image, place it at the middle of the canvas along the x-axis
-        x = 251 + 67; // Center horizontally
-        y = -3; // Center vertically
-      }
+      x = 251 + 67; // Center horizontally
+      y = -3; // Center vertically
+    }
 
       // Draw the resized image on the canvas
-      context.drawImage(image, x, y, width, height);
-    });
+    context.drawImage(image, x, y, width, height);
+  });
 
     // Add text to the canvas
     context.fillStyle = "black";
@@ -60,7 +62,6 @@ function generateImage(player) {
     context.fillText(`${player.position}`, 335, 100);
 
     return canvas;
-  });
 }
 
 // card [7c, 2c]
@@ -106,7 +107,7 @@ testPlayer2.action = "b"
 
 const playerArray = [testPlayer, testPlayer2]
 
-function generateMasterCanvas(playerArray) { //input array of players & LAST_TO_BET object
+async function generateMasterCanvas(playerArray) { //input array of players & LAST_TO_BET object
   const canvasWidth = 1920
   const canvasHeight = 1080
 
@@ -116,29 +117,27 @@ function generateMasterCanvas(playerArray) { //input array of players & LAST_TO_
   // Create an array to store promises of generated images
   const imagePromises = playerArray.map(player => generateImage(player));
 
-  Promise.all(imagePromises).then(canvases => {
-    // Place each canvas on the master canvas
-    canvases.forEach((canvas, index) => {
-      let x = 0;
-      if (index > 5) {
-        x = 1500
-        index -= 6
-      }
-      const position = {x: x, y: index*150};
+  const canvases = await Promise.all(imagePromises)
 
-      masterContext.drawImage(canvas, position.x, position.y);
-    });
+  // Place each canvas on the master canvas
+  canvases.forEach((canvas, index) => {
+    let x = 0;
+    if (index > 5) {
+      x = 1500
+      index -= 6
+    }
+    const position = {x: x, y: index*150};
 
-    // draw borad
-    // draw pot
-
-    // Example: Save the master canvas as an image
-    const fs = require("fs");
-    const out = fs.createWriteStream(__dirname + "/masterCanvas.png");
-    const stream = masterCanvas.createPNGStream();
-    stream.pipe(out);
-    out.on("finish", () => console.log("The master canvas PNG file was created."));
+    masterContext.drawImage(canvas, position.x, position.y);
   });
+
+  const masterCanvasPath = __dirname + "/masterCanvas.png";
+
+  fs.writeFileSync(masterCanvasPath, masterCanvas.toBuffer());
+
+  console.log("The master canvas PNG file was created.");
 }
+
+generateMasterCanvas(playerArray)
 
 module.exports = generateMasterCanvas;
