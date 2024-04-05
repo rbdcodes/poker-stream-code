@@ -36,6 +36,7 @@ const Menu = Object.freeze({
   EDIT_STACKS: 3,
   VIEW_PLAYERS: 4,
   START_HANDS: 5,
+  ADD_CHIPS: 6
 });
 
 let players = [];
@@ -84,6 +85,11 @@ async function main() {
   
       console.log(players);
       console.log();
+    } else if (selector == Menu.ADD_CHIPS) {
+      selector = Menu.HOME_PAGE;
+      printPlayersAndStacks();
+      editPlayerStacks();
+
     } else if (selector == Menu.START_HANDS) {
       selector = Menu.HOME_PAGE;
       const buttonStartingPosition = getButton();
@@ -528,6 +534,35 @@ function editPlayer() {
   }
 }
 
+function editPlayerStacks() {
+  while (1) {
+    seatNumber = readlineSync.question("Enter seat number to edit: ");
+    if (seatNumber < 1 || seatNumber > 8) {
+      console.log(`Invalid seat number:`);
+      continue;
+    }
+
+    console.log();
+    const confirm = readlineSync
+      .question(`Change ${players[seatNumber - 1].name} stack of ${players[seatNumber-1].stackSize}? \n Y || N? \n`)
+      .toLowerCase();
+    if (confirm == "y") {
+
+      let newStack = parseInt(readlineSync.question("Enter New Stack Size: "))
+      while (isNaN(newStack)) {
+        newStack = parseInt(readlineSync.question(`Invalid input, please put number of new stack: `))
+      }
+
+
+
+      players[seatNumber - 1].stackSize = newStack
+      console.log("Stack Changed!");
+      printPlayersAndStacks();
+    }
+    break;
+  }
+}
+
 function populatePlayerStacks() {
   for (let i = 0; i < players.length; i++) {
     let stackSize = parseInt(readlineSync.question(`Seat ${i + 1}. ${players[i].name} Stack: `));
@@ -573,15 +608,15 @@ function promptUserForOptions() {
   console.log(`Choose actions`);
   console.log();
   console.log(
-    `1. ADD PLAYERS 2. EDIT PLAYERS\n3. EDIT STACKS 4. VIEW PLAYERS \n5. START HAND`
+    `1. ADD PLAYERS 2. EDIT PLAYERS\n3. EDIT STACKS 4. VIEW PLAYERS \n5. START HAND 6. ADD CHIPS`
   );
   let input = 0;
-  while (input != 1 && input != 2 && input != 3 && input != 4 && input != 5) {
-    input = readlineSync.question("Enter 1-5: ");
-    if (input == 1 || input == 2 || input == 3 || input == 4 || input == 5) {
+  while (input != 1 && input != 2 && input != 3 && input != 4 && input != 5 && input != 6) {
+    input = readlineSync.question("Enter 1-6: ");
+    if (input == 1 || input == 2 || input == 3 || input == 4 || input == 5 || input == 6)  {
       selector = input;
     } else {
-      console.log("Invalid input. Please enter 1 - 5\n");
+      console.log("Invalid input. Please enter 1 - 6\n");
     }
   }
 }
