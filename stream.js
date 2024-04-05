@@ -4,6 +4,8 @@ const Queue = require("./Queue");
 const Player = require("./player");
 const assignCardsToMap = require('./assignCards.js');
 const generateMasterCanvas = require("./createOverlay");
+const path = require('path');
+const fs = require('fs');
 const playerQueue = new Queue();
 
 const SMALL_BLIND = 0.50
@@ -22,7 +24,8 @@ const ACTIONS = Object.freeze({
   FOLD: 'f',
   CALL: 'c',
   RAISE: 'r',
-  CHECK: 'x'
+  CHECK: 'x',
+  STANDBY: 's'
 })
 
 const Menu = Object.freeze({
@@ -36,7 +39,7 @@ const Menu = Object.freeze({
 
 let players = [];
 
-let board = [];
+let board = ["b", "b", "b", "b", "b"];
 let button = 2;
 const cardMap = new Map();
 let selector = Menu.HOME_PAGE;
@@ -85,35 +88,43 @@ async function main() {
       const buttonStartingPosition = getButton();
       initializePlayerQueue(buttonStartingPosition);
       await assignCardsToPlayers(buttonStartingPosition)
-      readPlayerActions()
+      await readPlayerActions()
       // read player Actions
     }
   }
 }
 
 async function readPlayerActions() {
-  console.log(players)
   let handIsOver = false;
   let pot = SMALL_BLIND + BIG_BLIND
   for (let i = 0; i < 4 && playerQueue.size() > 1; i++) {
 
+    if (i == 0) {
+      board = ["b", "b", "b", "b", "b"]
+    }
     if (i > 0) {
+      setBoard(i);
       adjustPlayerQueueOrder()
       resetPlayerCurrentBetAndAction()
       LAST_TO_BET.NAME = ""
       LAST_TO_BET.AMOUNT = 0.0
     }
 
-    console.log(playerQueue.items)
+    console.log(board)
+
+
+    // console.log(playerQueue.items)
     //print remaining players
 
     let actionIsClosed = false;
     let playerToAct = {}
     while (playerQueue.size() > 1 && !actionIsClosed) {
         playerToAct = playerQueue.dequeue()
-        //set flag playerToAct.isTurn = true;
+        // set flag playerToAct.isTurn = true;
         //generate players
-        await generateMasterCanvas(players)
+
+        //figure out which players to send
+        await generateMasterCanvas(players,board,pot)
 
         const input = readlineSync.question(`\n${playerToAct.position}|Seat ${playerToAct.seatNumber}: 'f', 'x', 'b', 'c', 'r':  `);
         const action = input.charAt(0);
@@ -212,12 +223,45 @@ function awardPotToWinner(pot) {
   players[seatNumberThatWon-1].stackSize += pot;
 }
 
+function setBoard(street) {
+  if (street === 1) {
+    for (let i = 0; i < 3; i++) {
+      let isValid = false;
+      while (!isValid) {
+        const card = readlineSync.question(`Enter card ${i + 1}: `);
+        if (isValidCard(card)) {
+          board[i] = card;
+          isValid = true;
+        } else {
+          console.log(`${card} is not a valid card.`);
+        }
+      }
+    }
+  } else if (street === 2 || street === 3) {
+    let isValid = false;
+      while (!isValid) {
+        const card = readlineSync.question(`Enter card ${street + 2}: `);
+        if (isValidCard(card)) {
+          board[street+1] = card;
+          isValid = true;
+        } else {
+          console.log(`${card} is not a valid card.`);
+        }
+   }
+  }
+}
+
+function isValidCard(card) {
+  const cardPath = path.join(__dirname, 'stream_cards', `${card}.png`);
+  return fs.existsSync(cardPath);
+}
+
 function resetPlayerCurrentBetAndAction() {
   let player = {}
   for (let i = 0; i < playerQueue.size(); i++) {
     player = playerQueue.dequeue()
     player.currentBet = 0.0
-    player.action = ''
+    player.action = ACTIONS.STANDBY
     playerQueue.enqueue(player)
   }
 }

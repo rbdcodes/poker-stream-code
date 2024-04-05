@@ -5,6 +5,7 @@ const Player = require("./player");
 
 // Function to generate canvas with images and text
 async function generateImage(player) {
+  
   // Define canvas dimensions
   const canvasWidth = 406;
   const canvasHeight = 119;
@@ -19,8 +20,8 @@ async function generateImage(player) {
   // Load images
   const images = await Promise.all([
     loadImage(__dirname + "/overlay_imgs/background.png"),
-    loadImage(__dirname + "/stream_cards/7h.png"),
-    loadImage(__dirname + "/stream_cards/2c.png")
+    loadImage(__dirname + `/stream_cards/${player.hand[0]}.png`),
+    loadImage(__dirname + `/stream_cards/${player.hand[1]}.png`)
   ]);
 
   images.forEach((image, index) => {
@@ -69,56 +70,19 @@ async function generateImage(player) {
 // stack size
 // position
 
-// Generate multiple instances of the canvas
-const testPlayer = new Player()
-this.name = "";
-this.stackSize = 0.0;
-this.seatNumber = "";
-this.currentBet = 0.0;
-this.position = "";
-this.hand = ["", ""]
-this.action = ""
-
-testPlayer.name = "Rebuy Rodney"
-testPlayer.stackSize = 1000
-testPlayer.seatNumber = "1"
-testPlayer.currentBet = 10
-testPlayer.position = "D"
-testPlayer.hand = ["Ah", "Ad"]
-testPlayer.action = "b"
-
-const testPlayer2 = new Player()
-this.name = "";
-this.stackSize = 0.0;
-this.seatNumber = "";
-this.currentBet = 0.0;
-this.position = "";
-this.hand = ["", ""]
-this.action = ""
-
-testPlayer2.name = "Nikhil G"
-testPlayer2.stackSize = 1000
-testPlayer2.seatNumber = "2"
-testPlayer2.currentBet = 10
-testPlayer2.position = "UTG"
-testPlayer2.hand = ["Ac", "As"]
-testPlayer2.action = "b"
-
-const playerArray = [testPlayer, testPlayer2]
-
-async function generateMasterCanvas(playerArray) { //input array of players & LAST_TO_BET object
+async function generateMasterCanvas(playerArray, board, pot) { //input array of players & LAST_TO_BET object
   const canvasWidth = 1920
   const canvasHeight = 1080
 
   const masterCanvas = createCanvas(canvasWidth, canvasHeight);
   const masterContext = masterCanvas.getContext("2d")
 
-  console.log(`test 1`)
 
   // Create an array to store promises of generated images
   const imagePromises = playerArray.map(player => generateImage(player));
-  console.log(imagePromises)
+  // console.log(imagePromises)
   const canvases = await Promise.all(imagePromises)
+  // console.log(canvases)
 
   // Place each canvas on the master canvas
   canvases.forEach((canvas, index) => {
@@ -131,6 +95,40 @@ async function generateMasterCanvas(playerArray) { //input array of players & LA
 
     masterContext.drawImage(canvas, position.x, position.y);
   });
+
+  // Load the pot background image
+  const potBackgroundImage = await loadImage(__dirname + "/overlay_imgs/pot_background.png");
+
+  masterContext.drawImage(potBackgroundImage, 1333, 900);
+
+  // let board = ["7c","2s","2d","5h","5d"];
+
+  const blankCard = await loadImage(__dirname + "/stream_cards/b.png");
+
+  const cardImagePromises = board.map(card => loadImage(__dirname + "/stream_cards/" + card + ".png"));
+
+  try {
+    // Wait for all card images to be loaded
+    const cardImages = await Promise.all(cardImagePromises);
+  
+    // Draw the loaded card images onto the master canvas
+    cardImages.forEach((cardImage, index) => {
+      const xPosition = 1368 + index * 100; // Increment x position by 100 each time
+      masterContext.drawImage(cardImage, xPosition, 840, 100, 88);
+    });
+  } catch (error) {
+    console.error("An error occurred while loading card images:", error);
+  }
+
+    // Define the text to be written
+  const potText = `POT: ${pot}`;
+
+  // Set the font style and color
+  masterContext.fillStyle = "black";
+  masterContext.font = "900 40px Arial";
+
+  // Write the text on the master canvas
+  masterContext.fillText(potText, 1530, 970);
 
   const masterCanvasPath = __dirname + "/masterCanvas.png";
 

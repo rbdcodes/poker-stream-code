@@ -1,5 +1,6 @@
 const generateMasterCanvas = require("./createOverlay");
 const Player = require("./player");
+const readlineSync = require("readline-sync");
 
 
 const testPlayer = new Player()
@@ -13,7 +14,7 @@ this.action = ""
 
 testPlayer.name = "Rebuy Rodney"
 testPlayer.stackSize = 1000
-testPlayer.seatNumber = "1"
+testPlayer.seatNumber = 1
 testPlayer.currentBet = 10
 testPlayer.position = "D"
 testPlayer.hand = ["Ah", "Ad"]
@@ -30,7 +31,7 @@ this.action = ""
 
 testPlayer2.name = "Nikhil GGG"
 testPlayer2.stackSize = 1000
-testPlayer2.seatNumber = "2"
+testPlayer2.seatNumber = 2
 testPlayer2.currentBet = 10
 testPlayer2.position = "UTG"
 testPlayer2.hand = ["Ac", "As"]
