@@ -86,11 +86,27 @@ async function main() {
     } else if (selector == Menu.START_HANDS) {
       selector = Menu.HOME_PAGE;
       const buttonStartingPosition = getButton();
+      console.log(`printing players`)
+      console.log(players)
+      console.log(`printing playerqueue`)
+      console.log(playerQueue)
+      initializeAllValues()
       initializePlayerQueue(buttonStartingPosition);
       await assignCardsToPlayers(buttonStartingPosition)
       await readPlayerActions()
       // read player Actions
     }
+  }
+}
+
+function initializeAllValues() {
+  playerQueue.clear();
+  for (player of players) {
+    player.currentBet = 0.0;
+    player.position = "";
+    player.hand = ["", ""]
+    player.action = ""
+    player.isTurn = false
   }
 }
 
@@ -217,7 +233,7 @@ function awardPotToWinner(pot) {
   let seatNumberThatWon = parseInt(readlineSync.question(`Which Seat won? `))
   while (!setOfRemainingSeats.has(seatNumberThatWon)) {
     console.log(remainingPlayers)
-    seatNumberThatWon = readlineSync.question(`Invalid Input, please choose seat from remaining players: `)
+    seatNumberThatWon = parseInt(readlineSync.question(`Invalid Input, please choose seat from remaining players: `))
   }
 
   players[seatNumberThatWon-1].stackSize += pot;
@@ -431,6 +447,7 @@ function initializePlayerQueue(buttonSeat) {
     }
 
     let currentPlayer = players[start];
+    currentPlayer.action = ""
     currentPlayer.position = positionArray[i];
     if (currentPlayer.position == "SB") {
       currentPlayer.currentBet = SMALL_BLIND
