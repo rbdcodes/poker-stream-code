@@ -2,6 +2,15 @@ const fs = require("fs");
 const { createCanvas, loadImage } = require("canvas");
 const Player = require("./player");
 
+const ACTIONS = Object.freeze({
+  BET: 'b',
+  FOLD: 'f',
+  CALL: 'c',
+  RAISE: 'r',
+  CHECK: 'x',
+  ALL_IN: 'a',
+  STANDBY: 's'
+})
 
 // Function to generate canvas with images and text
 async function generateImage(player) {
@@ -56,8 +65,28 @@ async function generateImage(player) {
     // Add text to the canvas
     context.fillStyle = "black";
     context.font = "900 23px Arial";
+
+    let actionText = ""
+    let playerBetText = player.currentBet;
+
+    if (player.action == ACTIONS.BET) {
+      actionText = "BET"
+    } else if (player.action == ACTIONS.CALL) {
+      actionText = "CALL"
+    } else if (player.action == ACTIONS.RAISE) {
+      actionText = "RAISE TO"
+    } else if (player.action == ACTIONS.CHECK) {
+      actionText = "CHECK"
+    } else if (player.action == ACTIONS.FOLD) {
+      actionText = "FOLD"
+      playerBetText = ""
+    }
+
+
     context.fillText(`${player.seatNumber}. ${player.name}`, 10, 50);
-    context.fillText(`${player.action} ${player.currentBet}`, 25, 100);
+    if (player.currentBet > 0) {
+      context.fillText(`${actionText} ${playerBetText}`, 25, 100);
+    }
     context.fillText(`${player.stackSize}`, 215, 100);
     context.fillText(`${player.position}`, 335, 100);
 
@@ -86,7 +115,10 @@ async function generateMasterCanvas(playerArray, board, pot) { //input array of 
 
   // Place each canvas on the master canvas
   canvases.forEach((canvas, index) => {
-    let x = 0;
+    let x = 30;
+    if (playerArray[index].isTurn) {
+      x += 70;
+    }
     if (index > 5) {
       x = 1500
       index -= 6

@@ -25,6 +25,7 @@ const ACTIONS = Object.freeze({
   CALL: 'c',
   RAISE: 'r',
   CHECK: 'x',
+  ALL_IN: 'a',
   STANDBY: 's'
 })
 
@@ -128,6 +129,8 @@ async function readPlayerActions() {
 
     console.log(board)
 
+    const playersForMasterCanvas = getPlayersForMasterCanvas()
+
 
     // console.log(playerQueue.items)
     //print remaining players
@@ -135,14 +138,16 @@ async function readPlayerActions() {
     let actionIsClosed = false;
     let playerToAct = {}
     while (playerQueue.size() > 1 && !actionIsClosed) {
-        playerToAct = playerQueue.dequeue()
-        // set flag playerToAct.isTurn = true;
+        playerToAct = playerQueue.peek();
+        playerToAct.isTurn = true;
         //generate players
 
         //figure out which players to send
-        await generateMasterCanvas(players,board,pot)
+        await generateMasterCanvas(playersForMasterCanvas,board,pot)
+        playerToAct = playerQueue.dequeue()
 
-        const input = readlineSync.question(`\n${playerToAct.position}|Seat ${playerToAct.seatNumber}: 'f', 'x', 'b', 'c', 'r':  `);
+
+        const input = readlineSync.question(`\n${playerToAct.position}|Seat ${playerToAct.seatNumber}: 'f', 'x', 'b', 'c', 'r', 'a':  `);
         const action = input.charAt(0);
         if (action == ACTIONS.BET) {
           console.log("bet")
@@ -172,10 +177,10 @@ async function readPlayerActions() {
           playerQueue.enqueue(playerToAct);
         } else if (action == ACTIONS.CALL) {
           console.log("Call")
-
-          playerToAct.stackSize = playerToAct.stackSize - (LAST_TO_BET.AMOUNT - playerToAct.currentBet);
-          pot += (LAST_TO_BET.AMOUNT - playerToAct.currentBet)
-          playerToAct.currentBet = LAST_TO_BET.AMOUNT
+          const amountCalled = Math.min((LAST_TO_BET.AMOUNT - playerToAct.currentBet), playerToAct.stackSize)
+          playerToAct.currentBet = Math.min(LAST_TO_BET.AMOUNT, playerToAct.stackSize + playerToAct.currentBet)
+          playerToAct.stackSize = playerToAct.stackSize - amountCalled;
+          pot += amountCalled
           playerToAct.action = ACTIONS.CALL
 
           playerQueue.enqueue(playerToAct)
@@ -192,10 +197,23 @@ async function readPlayerActions() {
           console.log("Fold")
 
           playerToAct.action = ACTIONS.FOLD
+        } else if (action == ACTIONS.ALL_IN) {
+          const betAmount = playerToAct.stackSize
+          pot += (betAmount - playerToAct.currentBet)
+          playerToAct.stackSize = playerToAct.stackSize -  (betAmount - playerToAct.currentBet);
+          playerToAct.action = ACTIONS.RAISE
+          playerToAct.currentBet = betAmount + playerToAct.currentBet
+
+
+          LAST_TO_BET.NAME = playerToAct.name;
+          LAST_TO_BET.AMOUNT = betAmount;
         } else {
           console.log(`Incorrect input, please retry`)
+          playerToAct.isTurn = false;
           continue;
         }
+
+        playerToAct.isTurn = false;
 
         playerToAct = playerQueue.peek()
         if (playerToAct.name == LAST_TO_BET.NAME && LAST_TO_BET.AMOUNT != BIG_BLIND) {
@@ -211,6 +229,18 @@ async function readPlayerActions() {
   // awrd pot to winner
   awardPotToWinner(pot)
   console.log(players)
+}
+
+function getPlayersForMasterCanvas() {
+  //if action is standby or not fold / empty
+  let playerArray = []
+  for (let i = 0; i < playerQueue.size(); i++) {
+      const player = playerQueue.dequeue();
+      playerArray.push(player);
+      playerQueue.enqueue(player)
+  }
+
+  return playerArray;
 }
 
 function awardPotToWinner(pot) {
@@ -500,7 +530,7 @@ function editPlayer() {
 
 function populatePlayerStacks() {
   for (let i = 0; i < players.length; i++) {
-    let stackSize = parseInt(readlineSync.question(`Seat ${i + 1} Stack: `));
+    let stackSize = parseInt(readlineSync.question(`Seat ${i + 1}. ${players[i].name} Stack: `));
     while (isNaN(stackSize)) {
       stackSize = readlineSync.question(
         `Invalid input, please enter number:  `
