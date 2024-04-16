@@ -424,7 +424,7 @@ function sortPlayerHoleCards() {
 function getScannedCards(array) {
   return new Promise((resolve, reject) => {
     try {
-      const scannedCards = require("./TEST/hands.json");
+      const scannedCards = JSON.parse(fs.readFileSync("./TEST/hands.json", 'utf8'));
       for (card of scannedCards.tags) {
         array.push(cardMap.get(card.nfcTag.uid))
       }
