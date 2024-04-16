@@ -77,6 +77,7 @@ async function generateImage(player) {
       actionText = "RAISE TO"
     } else if (player.action == ACTIONS.CHECK) {
       actionText = "CHECK"
+      playerBetText = ""
     } else if (player.action == ACTIONS.FOLD) {
       actionText = "FOLD"
       playerBetText = ""
@@ -84,7 +85,7 @@ async function generateImage(player) {
 
 
     context.fillText(`${player.seatNumber}. ${player.name}`, 10, 50);
-    if (player.currentBet > 0) {
+    if (player.currentBet > 0 || player.action == ACTIONS.CHECK || player.action == ACTIONS.FOLD) {
       context.fillText(`${actionText} ${playerBetText}`, 25, 100);
     }
     context.fillText(`${player.stackSize}`, 215, 100);
@@ -109,9 +110,7 @@ async function generateMasterCanvas(playerArray, board, pot) { //input array of 
 
   // Create an array to store promises of generated images
   const imagePromises = playerArray.map(player => generateImage(player));
-  // console.log(imagePromises)
   const canvases = await Promise.all(imagePromises)
-  // console.log(canvases)
 
   // Place each canvas on the master canvas
   canvases.forEach((canvas, index) => {
@@ -131,11 +130,9 @@ async function generateMasterCanvas(playerArray, board, pot) { //input array of 
   // Load the pot background image
   const potBackgroundImage = await loadImage(__dirname + "/overlay_imgs/pot_background.png");
 
-  masterContext.drawImage(potBackgroundImage, 1333, 900);
+  masterContext.drawImage(potBackgroundImage, 1333, 950);
 
   // let board = ["7c","2s","2d","5h","5d"];
-
-  const blankCard = await loadImage(__dirname + "/stream_cards/b.png");
 
   const cardImagePromises = board.map(card => loadImage(__dirname + "/stream_cards/" + card + ".png"));
 
@@ -146,7 +143,7 @@ async function generateMasterCanvas(playerArray, board, pot) { //input array of 
     // Draw the loaded card images onto the master canvas
     cardImages.forEach((cardImage, index) => {
       const xPosition = 1368 + index * 100; // Increment x position by 100 each time
-      masterContext.drawImage(cardImage, xPosition, 840, 100, 88);
+      masterContext.drawImage(cardImage, xPosition, 890, 100, 88);
     });
   } catch (error) {
     console.error("An error occurred while loading card images:", error);
@@ -160,7 +157,7 @@ async function generateMasterCanvas(playerArray, board, pot) { //input array of 
   masterContext.font = "900 40px Arial";
 
   // Write the text on the master canvas
-  masterContext.fillText(potText, 1530, 970);
+  masterContext.fillText(potText, 1530, 1020);
 
   const masterCanvasPath = __dirname + "/masterCanvas.png";
 
@@ -169,7 +166,4 @@ async function generateMasterCanvas(playerArray, board, pot) { //input array of 
   console.log("The master canvas PNG file was created.");
 }
 
-// generateMasterCanvas(playerArray)
-
-// generateMasterCanvas(playerArray)
 module.exports = generateMasterCanvas;

@@ -224,6 +224,7 @@ async function readPlayerActions() {
         playerToAct = playerQueue.peek()
         if (playerToAct.name == LAST_TO_BET.NAME && LAST_TO_BET.AMOUNT != BIG_BLIND) {
           actionIsClosed = true;
+          await generateMasterCanvas(playersForMasterCanvas,board,pot)
         }
 
         //set flag playerToact.isTurn = false
@@ -396,7 +397,9 @@ function sortPlayerHoleCards() {
     } else if (hand1 == 'Q') {
       hand1Value = 12;
     } else if (hand1 == 'J') {
-      hand1Value = 11
+      hand1Value = 11;
+    } else if (hand1 == 'T') {
+      hand1Value = 10;
     } else {
       hand1Value = parseInt(hand1);
     }
@@ -408,8 +411,10 @@ function sortPlayerHoleCards() {
     } else if (hand2 == 'Q') {
       hand2Value = 12;
     } else if (hand2 == 'J') {
-      hand2Value = 11
-    } else {
+      hand2Value = 11;
+    } else if (hand2 == 'T') {
+      hand2Value = 10;
+    }else {
       hand2Value = parseInt(hand2);
     }
 
